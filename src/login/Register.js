@@ -14,7 +14,7 @@ export function Register(props) {
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user`,
       {
         method: "POST",
-        body: JSON.stringify({username: username, password: password, amount: initialBalance}),
+        body: JSON.stringify({username: username, password: password, initBal: initialBalance}),
         headers: {'Content-Type': 'application/json'}
       });
     if (response.status !== 201)

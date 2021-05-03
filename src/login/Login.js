@@ -9,11 +9,13 @@ export function Login(props) {
   const [valid, setValid] = useState(true);
 
   const login = async () => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login/${username}`,
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login`,
       {
-        headers: {'Content-Type': 'application/json', 'Authorization': password}
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'Authorization': password},
+        body: JSON.stringify({username: username})
       });
-    if (response.status !== 200) setValid(false);
+    if (response.status !== 201) setValid(false);
     else props.success(username, password);
   };
 

@@ -38,7 +38,7 @@ function InvalidWithdrawal(props) {
 }
 
 export function BankHome(props) {
-  const [balance, setBalance] = useState(props.balance);
+  const [balance, setBalance] = useState(0.0);
   const [amount, setAmount] = useState(0);
   const [validWithdrawal, setValidWithdrawal] = useState(true);
 
@@ -46,11 +46,11 @@ export function BankHome(props) {
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/withdrawal`,
       {
         method: "POST",
-        body: JSON.stringify({username: props.username, password: props.password, amount: amount}),
-        headers: {'Content-Type': 'application/json'}
+        body: JSON.stringify({username: props.username, amount: amount}),
+        headers: {'Content-Type': 'application/json', 'Authorization': props.password}
       });
 
-    if (response.status === 400) {
+    if (response.status === 406) {
       setValidWithdrawal(false);
       return;
     }
@@ -63,8 +63,8 @@ export function BankHome(props) {
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/deposit`,
       {
         method: "POST",
-        body: JSON.stringify({username: props.username, password: props.password, amount: amount}),
-        headers: {'Content-Type': 'application/json'}
+        body: JSON.stringify({username: props.username, amount: amount}),
+        headers: {'Content-Type': 'application/json', 'Authorization': props.password}
       });
 
     const json = await response.json();
@@ -73,7 +73,7 @@ export function BankHome(props) {
   }
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/${props.username}/balance`,
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/balance/${props.username}`,
       {
         headers: {'Content-Type': 'application/json', 'Authorization': props.password}
       }).then(response => response.json()).then(json => setBalance(json.balance)).catch(err => console.error(err));
