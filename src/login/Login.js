@@ -2,13 +2,20 @@ import React, {useState} from "react";
 import {Container, CssBaseline, Grid, Link, TextField, Typography} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {InvalidCredentials} from "./InvalidCredentials"
+import {InvalidFields} from "./InvalidFields";
+import {validateFields} from "./Utils";
 
 export function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState(true);
+  const [fieldsValid, setFieldsValid] = useState(true);
 
   const login = async () => {
+    let isValid = await validateFields(username, password);
+    setFieldsValid(isValid);
+    if (!isValid) return;
+
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login`,
       {
         method: 'POST',
@@ -23,6 +30,7 @@ export function Login(props) {
     <Container component="main" maxWidth="xs">
       <CssBaseline/>
       <InvalidCredentials open={valid} close={() => setValid(true)}/>
+      <InvalidFields open={fieldsValid} close={() => setFieldsValid(true)}/>
       <Typography variant="h4">
         Sign in
       </Typography>

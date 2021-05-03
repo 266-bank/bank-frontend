@@ -3,14 +3,21 @@ import {Container, CssBaseline, Grid, Link, TextField, Typography} from "@materi
 import Button from "@material-ui/core/Button";
 import {InvalidCredentials} from "./InvalidCredentials"
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
+import {InvalidFields} from "./InvalidFields";
+import {validateFields} from "./Utils";
 
 export function Register(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [initialBalance, setInitialBalance] = useState(0);
   const [valid, setValid] = useState(true);
+  const [fieldsValid, setFieldsValid] = useState(true);
 
   const register = async () => {
+    let isValid = await validateFields(username, password);
+    setFieldsValid(isValid);
+    if (!isValid) return;
+
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user`,
       {
         method: "POST",
@@ -27,6 +34,7 @@ export function Register(props) {
     <Container component="main" maxWidth="xs">
       <CssBaseline/>
       <InvalidCredentials open={valid} close={() => setValid(true)}/>
+      <InvalidFields open={fieldsValid} close={() => setFieldsValid(true)}/>
       <Typography variant="h4">
         Register
       </Typography>

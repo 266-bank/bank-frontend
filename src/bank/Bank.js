@@ -9,13 +9,14 @@ import {
   DialogTitle,
   Grid,
   Link,
-  Typography
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import NumberFormat from 'react-number-format';
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 
 function CurrentBalance(props) {
-  return <Typography variant="h4">Balance: {props.balance}</Typography>
+  return (<h1>Balance: <NumberFormat thousandSeparator={true} prefix={"$"}
+                                     displayType={"text"} value={props.balance}/></h1>)
 }
 
 function InvalidWithdrawal(props) {
@@ -25,7 +26,10 @@ function InvalidWithdrawal(props) {
       <DialogTitle id="alert-dialog-title">You Attempted to Withdraw an Invalid Amount!</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          You have ${props.balance}. You attempted to withdraw ${props.amount}.
+          You have <NumberFormat thousandSeparator={true} prefix={"$"}
+                                 displayType={"text"} value={props.balance}/>. You attempted to withdraw <NumberFormat
+          thousandSeparator={true} prefix={"$"}
+          displayType={"text"} value={props.amount}/>.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
