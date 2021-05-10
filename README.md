@@ -1,4 +1,4 @@
-# SWE266-bank (Backend)
+# SWE266-bank (Frontend)
 ### Description
 #### This web application is a simple general bank applicaiton that provides basic operations. Once the user successfully created the account or once the user has successfully logged in, the user is allowed to deposit money, withdraw money, and check balance. However, this bank application is injected with several types of vulnerabilities, and is deiberately created to be vulnerable.
 
