@@ -94,8 +94,8 @@ export function BankHome(props) {
         label="Amount"
         value={amount}
         currencySymbol="$"
-        maximumValue={'1000000000'}
-        minimumValue={'0'}
+        maximumValue={'4294967295.99'}
+        minimumValue={'0.00'}
         leadingZero={"allow"}
         fullWidth
         margin={"normal"}
